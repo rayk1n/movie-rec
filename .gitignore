@@ -9,3 +9,32 @@ similarity.pkl
 
 # Virtual environments
 .venv
+
+# Django
+*.log
+db.sqlite3
+
+# Environment variables (never commit secrets)
+.env
+*.env
+
+# ML data files (too large for git)
+ml_data/
+*.pkl
+*.csv
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# React / Node
+node_modules/
+build/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
