@@ -131,3 +131,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ML_DATA_DIR = os.path.join(BASE_DIR, 'ml_data')
+
+
+import sys
+
+# Don't run scheduler during migrations or management commands
+if 'runserver' in sys.argv:
+    from movies.scheduler import start_scheduler
+    start_scheduler()
