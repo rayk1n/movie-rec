@@ -227,21 +227,17 @@ body {
 
 /* ── MOVIE CARD ── */
 .movie-card {
-    border-radius: 16px;
-    padding: 1.5rem 1.25rem 1.25rem;
+    background: var(--bg-card);
+    border-radius: 12px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    min-height: 180px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
 }
 
 .movie-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
 }
 
 .card-rank {
@@ -342,4 +338,116 @@ body {
     .logo { font-size: 1.8rem; }
     .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
     .movie-card { min-height: 150px; padding: 1rem; }
+}
+
+.card-year {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* ── POSTER ── */
+.card-poster-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: #1a1a2e;
+    overflow: hidden;
+}
+
+.card-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.movie-card:hover .card-poster {
+    transform: scale(1.04);
+}
+
+.card-poster-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.fallback-icon { font-size: 2.5rem; }
+
+.fallback-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* ── BADGES OVERLAID ON POSTER ── */
+.card-rank-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.card-similarity-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    border: 1px solid;
+    backdrop-filter: blur(4px);
+}
+
+/* ── CARD INFO BELOW POSTER ── */
+.card-info {
+    padding: 0.75rem;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #fff;
+    margin-bottom: 0.4rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-rating {
+    font-size: 0.78rem;
+    color: #f59e0b;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
 }

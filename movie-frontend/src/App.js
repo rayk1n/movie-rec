@@ -132,6 +132,9 @@ function App() {
                                     title={movie.title}
                                     similarity={movie.similarity}
                                     rank={index + 1}
+                                    posterUrl={movie.poster_url}
+                                    releaseYear={movie.release_year}
+                                    voteAverage={movie.vote_average} 
                                     onClick={() => fetchRecommendations(movie.title)}
                                 />
                             ))}

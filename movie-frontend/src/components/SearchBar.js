@@ -52,10 +52,11 @@ function SearchBar({ onMovieSelect, isLoading }) {
     }, []);
 
     // ── When user picks a suggestion ──
-    function handleSelect(title) {
-        setInputValue(title);    // Show the selected title in the input
-        setShowDropdown(false);  // Hide the dropdown
-        onMovieSelect(title);    // Tell the parent component (App.js) which movie was selected
+    function handleSelect(item) {
+        const title = typeof item === 'string' ? item : item.title;
+        setInputValue(title);
+        setShowDropdown(false);
+        onMovieSelect(title);
     }
 
     // ── When user presses Enter ──
@@ -92,13 +93,16 @@ function SearchBar({ onMovieSelect, isLoading }) {
             {/* Autocomplete Dropdown */}
             {showDropdown && suggestions.length > 0 && (
                 <ul className="suggestions-dropdown">
-                    {suggestions.map((title, index) => (
+                    {suggestions.map((item, index) => (
                         <li
                             key={index}
                             className="suggestion-item"
-                            onClick={() => handleSelect(title)}
+                            onClick={() => handleSelect(item)}
                         >
-                            🎬 {title}
+                            <span>🎬 {item.title}</span>
+                            {item.release_year && (
+                                <span className="suggestion-year"> ({item.release_year})</span>
+                            )}
                         </li>
                     ))}
                 </ul>
