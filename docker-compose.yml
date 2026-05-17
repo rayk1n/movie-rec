@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: movie_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${DB_NAME}
+      POSTGRES_USER:     ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"   # 5433 on host to avoid conflict with your local PostgreSQL
+
+
+  django:
+    build:
+      context: ./movie_recommender_backend
+      dockerfile: Dockerfile
+    container_name: movie_django
+    restart: unless-stopped
+    environment:
+      SECRET_KEY:   ${SECRET_KEY}
+      DEBUG:        ${DEBUG}
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      TMDB_API_KEY: ${TMDB_API_KEY}
+    volumes:
+      # ml_data is mounted so similarity.pkl persists across container restarts
+      # and refresh_movies writes directly to your local folder
+      - ./movie_recommender_backend/ml_data:/app/ml_data
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    command: >
+      sh -c "python manage.py migrate &&
+             gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 2"
+
+
+  react:
+    build:
+      context: ./movie-frontend
+      dockerfile: Dockerfile
+    container_name: movie_react
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - django
+
+
+volumes:
+  postgres_data:

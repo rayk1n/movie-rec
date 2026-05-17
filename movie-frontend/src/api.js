@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// This is the base URL for our Django API.
-// axios will prepend this to every request.
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
-    timeout: 10000,  // Give up after 10 seconds
+    // In Docker: nginx handles /api/ → no need for full URL
+    // In local dev (npm start): falls back to localhost:8000
+    baseURL: process.env.REACT_APP_API_URL || '/api',
+    timeout: 10000,
 });
 
 export default api;
